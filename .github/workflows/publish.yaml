@@ -1,0 +1,29 @@
+name: Publish docker images
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  push:
+    name: Build & push
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Build & push the image
+        uses: ./.github/workflows/actions/docker-build-image
+        with:
+          image: dpm
+          platform: linux/amd64,linux/arm64
+          registry: ghcr.io
+          namespace: janjakubnanista
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
