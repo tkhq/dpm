@@ -14,6 +14,10 @@ jobs:
       contents: read
       packages: write
 
+    strategy:
+      matrix:
+        dpm-version: ["3.4.11", "2.10.4"]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -27,3 +31,4 @@ jobs:
           namespace: janjakubnanista
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+          dpm-version: ${{ matrix.dpm-version }}
